@@ -1,0 +1,27 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Payment {
+  id                 String   @id @default(cuid())
+  checkoutRequestId  String   @unique
+  merchantRequestId  String?
+  phoneNumber        String
+  amount             Float
+  accountReference   String?
+  transactionDesc    String?
+  status             String   @default("pending") // pending, completed, failed, cancelled
+  resultCode         Int?
+  resultDesc         String?
+  mpesaReceiptNumber String?
+  transactionDate    String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
